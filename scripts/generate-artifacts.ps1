@@ -65,7 +65,7 @@ Write-Output "Generating a SAS token for the template artifact"
 $date = Get-Date
 $date = $date.AddDays(30) 
 $resourcesTemplateSaSToken = New-AzStorageBlobSASToken -Container $containerName -Blob "$taskName/$resourcesTemplateName" -Permission r -ExpiryTime $date -Context $storageAccount.Context
-$resourcesTemplateURL = "$($blob.ICloudBlob.uri.AbsoluteUri)$resourcesTemplateSaSToken"
+$resourcesTemplateURL = "$($blob.ICloudBlob.uri.AbsoluteUri)?$resourcesTemplateSaSToken"
 
 
 # updating artifacts config
