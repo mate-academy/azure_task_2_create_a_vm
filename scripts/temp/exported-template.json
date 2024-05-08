@@ -82,6 +82,10 @@
         "publicIPAddressVersion": "IPv4",
         "publicIPAllocationMethod": "Static",
         "idleTimeoutInMinutes": 4,
+        "dnsSettings": {
+          "domainNameLabel": "tast2",
+          "fqdn": "tast2.uksouth.cloudapp.azure.com"
+        },
         "ipTags": []
       }
     },
@@ -268,7 +272,7 @@
           {
             "name": "ipconfig1",
             "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_myvm742_name')), '/ipConfigurations/ipconfig1')]",
-            "etag": "W/\"6158f51d-9752-4621-8c27-60311f1fd44d\"",
+            "etag": "W/\"95ea1460-824d-4e40-ae70-a13740750353\"",
             "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
             "properties": {
               "provisioningState": "Succeeded",
