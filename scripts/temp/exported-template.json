@@ -2,93 +2,24 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "extensions_enablevmAccess_username": {
-      "type": "SecureString"
-    },
-    "extensions_enablevmAccess_password": {
-      "type": "SecureString"
-    },
-    "extensions_enablevmAccess_ssh_key": {
-      "type": "SecureString"
-    },
-    "extensions_enablevmAccess_reset_ssh": {
-      "type": "SecureString"
-    },
-    "extensions_enablevmAccess_remove_user": {
-      "type": "SecureString"
-    },
-    "extensions_enablevmAccess_expiration": {
-      "type": "SecureString"
+    "virtualMachines_vm_task_2_name": {
+      "type": "String"
     },
     "publicIPAddresses_vm_task_pip_name": {
+      "type": "String"
+    },
+    "networkInterfaces_vm_task_2831_name": {
       "type": "String"
     },
     "virtualNetworks_vm_task_2_vnet_name": {
       "type": "String"
     },
-    "virtualMachines_mate_azure_task_2_name": {
-      "type": "String"
-    },
     "networkSecurityGroups_vm_task_2_nsg_name": {
-      "type": "String"
-    },
-    "networkInterfaces_mate_azure_task_2317_name": {
-      "type": "String"
-    },
-    "networkSecurityGroups_mate_azure_task_2_nsg_name": {
       "type": "String"
     }
   },
   "variables": {},
   "resources": [
-    {
-      "type": "Microsoft.Network/networkSecurityGroups",
-      "apiVersion": "2023-11-01",
-      "name": "[parameters('networkSecurityGroups_mate_azure_task_2_nsg_name')]",
-      "location": "uksouth",
-      "properties": {
-        "securityRules": [
-          {
-            "name": "SSH",
-            "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_mate_azure_task_2_nsg_name'), 'SSH')]",
-            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
-            "properties": {
-              "protocol": "TCP",
-              "sourcePortRange": "*",
-              "destinationPortRange": "22",
-              "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 300,
-              "direction": "Inbound",
-              "sourcePortRanges": [],
-              "destinationPortRanges": [],
-              "sourceAddressPrefixes": [],
-              "destinationAddressPrefixes": []
-            }
-          },
-          {
-            "name": "HTTP",
-            "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_mate_azure_task_2_nsg_name'), 'HTTP')]",
-            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
-            "properties": {
-              "protocol": "TCP",
-              "sourcePortRange": "*",
-              "destinationPortRange": "8080",
-              "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 310,
-              "direction": "Inbound",
-              "sourcePortRanges": [],
-              "destinationPortRanges": [],
-              "sourceAddressPrefixes": [],
-              "destinationAddressPrefixes": []
-            }
-          }
-        ]
-      }
-    },
     {
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2023-11-01",
@@ -114,6 +45,25 @@
               "sourceAddressPrefixes": [],
               "destinationAddressPrefixes": []
             }
+          },
+          {
+            "name": "HTTP",
+            "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_vm_task_2_nsg_name'), 'HTTP')]",
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "properties": {
+              "protocol": "TCP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "8080",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 310,
+              "direction": "Inbound",
+              "sourcePortRanges": [],
+              "destinationPortRanges": [],
+              "sourceAddressPrefixes": [],
+              "destinationAddressPrefixes": []
+            }
           }
         ]
       }
@@ -128,7 +78,7 @@
         "tier": "Regional"
       },
       "properties": {
-        "ipAddress": "172.167.153.35",
+        "ipAddress": "20.68.217.139",
         "publicIPAddressVersion": "IPv4",
         "publicIPAllocationMethod": "Dynamic",
         "idleTimeoutInMinutes": 4,
@@ -173,10 +123,10 @@
     {
       "type": "Microsoft.Compute/virtualMachines",
       "apiVersion": "2024-03-01",
-      "name": "[parameters('virtualMachines_mate_azure_task_2_name')]",
+      "name": "[parameters('virtualMachines_vm_task_2_name')]",
       "location": "uksouth",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_mate_azure_task_2317_name'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_vm_task_2831_name'))]"
       ],
       "properties": {
         "hardwareProfile": {
@@ -194,12 +144,12 @@
           },
           "osDisk": {
             "osType": "Linux",
-            "name": "[concat(parameters('virtualMachines_mate_azure_task_2_name'), '_disk1_eee1debd82874249b07ce61e22bcee81')]",
+            "name": "[concat(parameters('virtualMachines_vm_task_2_name'), '_disk1_2db43a3c645f4451aad1707e81dc609a')]",
             "createOption": "FromImage",
             "caching": "ReadWrite",
             "managedDisk": {
               "storageAccountType": "Premium_LRS",
-              "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_mate_azure_task_2_name'), '_disk1_eee1debd82874249b07ce61e22bcee81'))]"
+              "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_vm_task_2_name'), '_disk1_2db43a3c645f4451aad1707e81dc609a'))]"
             },
             "deleteOption": "Delete",
             "diskSizeGB": 30
@@ -208,10 +158,18 @@
           "diskControllerType": "SCSI"
         },
         "osProfile": {
-          "computerName": "[parameters('virtualMachines_mate_azure_task_2_name')]",
+          "computerName": "[parameters('virtualMachines_vm_task_2_name')]",
           "adminUsername": "irisha",
           "linuxConfiguration": {
-            "disablePasswordAuthentication": false,
+            "disablePasswordAuthentication": true,
+            "ssh": {
+              "publicKeys": [
+                {
+                  "path": "/home/irisha/.ssh/authorized_keys",
+                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDlWyci+6sbNGjRq35e83/0XQIIMOdkX+fWNsJVl9OqcP24JqrIudNI7VlpblxzlZsRpGyolDm8Y+egbGLWTj+KMehafziDpDg+7+BtvHCfphHka9wn0noAHVknGCNPL1DPvU8NH+NQ4BJXZ342dTZZns+f/oMhyHQY9vH24xSJwp2IAGcexOEEc4vFyeGf+bO18owdfqzh2U1uNi7aWb3vV/DGrO2fMf8FLrC24z3dMEi7Rs2Ag4DG2T4k8Y5NUJRnSFkClowYaqRDxk+HaoyLweyy1CyleCKj3zC9et9WKjXIlhoVSVxjpMzGrpCwUTeja8bNyTEFrvlQCHYhzmtF"
+                }
+              ]
+            },
             "provisionVMAgent": true,
             "patchSettings": {
               "patchMode": "AutomaticByPlatform",
@@ -229,7 +187,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_mate_azure_task_2317_name'))]",
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_vm_task_2831_name'))]",
               "properties": {
                 "deleteOption": "Detach"
               }
@@ -244,35 +202,11 @@
       }
     },
     {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "apiVersion": "2024-03-01",
-      "name": "[concat(parameters('virtualMachines_mate_azure_task_2_name'), '/enablevmAccess')]",
-      "location": "uksouth",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachines_mate_azure_task_2_name'))]"
-      ],
-      "properties": {
-        "autoUpgradeMinorVersion": true,
-        "publisher": "Microsoft.OSTCExtensions",
-        "type": "VMAccessForLinux",
-        "typeHandlerVersion": "1.5",
-        "settings": {},
-        "protectedSettings": {
-          "username": "[parameters('extensions_enablevmAccess_username')]",
-          "password": "[parameters('extensions_enablevmAccess_password')]",
-          "ssh_key": "[parameters('extensions_enablevmAccess_ssh_key')]",
-          "reset_ssh": "[parameters('extensions_enablevmAccess_reset_ssh')]",
-          "remove_user": "[parameters('extensions_enablevmAccess_remove_user')]",
-          "expiration": "[parameters('extensions_enablevmAccess_expiration')]"
-        }
-      }
-    },
-    {
       "type": "Microsoft.Network/networkSecurityGroups/securityRules",
       "apiVersion": "2023-11-01",
-      "name": "[concat(parameters('networkSecurityGroups_mate_azure_task_2_nsg_name'), '/HTTP')]",
+      "name": "[concat(parameters('networkSecurityGroups_vm_task_2_nsg_name'), '/HTTP')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_mate_azure_task_2_nsg_name'))]"
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_vm_task_2_nsg_name'))]"
       ],
       "properties": {
         "protocol": "TCP",
@@ -282,28 +216,6 @@
         "destinationAddressPrefix": "*",
         "access": "Allow",
         "priority": 310,
-        "direction": "Inbound",
-        "sourcePortRanges": [],
-        "destinationPortRanges": [],
-        "sourceAddressPrefixes": [],
-        "destinationAddressPrefixes": []
-      }
-    },
-    {
-      "type": "Microsoft.Network/networkSecurityGroups/securityRules",
-      "apiVersion": "2023-11-01",
-      "name": "[concat(parameters('networkSecurityGroups_mate_azure_task_2_nsg_name'), '/SSH')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_mate_azure_task_2_nsg_name'))]"
-      ],
-      "properties": {
-        "protocol": "TCP",
-        "sourcePortRange": "*",
-        "destinationPortRange": "22",
-        "sourceAddressPrefix": "*",
-        "destinationAddressPrefix": "*",
-        "access": "Allow",
-        "priority": 300,
         "direction": "Inbound",
         "sourcePortRanges": [],
         "destinationPortRanges": [],
@@ -350,19 +262,19 @@
     {
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "2023-11-01",
-      "name": "[parameters('networkInterfaces_mate_azure_task_2317_name')]",
+      "name": "[parameters('networkInterfaces_vm_task_2831_name')]",
       "location": "uksouth",
       "dependsOn": [
         "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_vm_task_pip_name'))]",
         "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_vm_task_2_vnet_name'), 'default')]",
-        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_mate_azure_task_2_nsg_name'))]"
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_vm_task_2_nsg_name'))]"
       ],
       "kind": "Regular",
       "properties": {
         "ipConfigurations": [
           {
             "name": "ipconfig1",
-            "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_mate_azure_task_2317_name')), '/ipConfigurations/ipconfig1')]",
+            "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_vm_task_2831_name')), '/ipConfigurations/ipconfig1')]",
             "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
             "properties": {
               "privateIPAddress": "10.0.0.4",
@@ -385,7 +297,7 @@
         "enableIPForwarding": false,
         "disableTcpStateTracking": false,
         "networkSecurityGroup": {
-          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_mate_azure_task_2_nsg_name'))]"
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_vm_task_2_nsg_name'))]"
         },
         "nicType": "Standard",
         "auxiliaryMode": "None",
