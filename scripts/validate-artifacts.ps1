@@ -68,17 +68,17 @@ if (-not $virtualMachine.properties.securityProfile) {
     throw "Virtual machine security type is set to TMP or Confidential. Please re-deploy VM with security type set to 'Standard' and try again."
 }
 
-if ($virtualMachine.properties.storageProfile.imageReference.publisher -eq "canonical") { 
+if ($virtualMachine.properties.storageProfile.imageReference.publisher -eq "canonical") {
     Write-Output "`u{2705} Checked Virtual Machine OS image publisher - OK" 
 } else { 
     Write-Output `u{1F914}
     throw "Virtual Machine uses OS image from unknown published. Please re-deploy the VM using OS image from publisher 'Cannonical' and try again."
 }
-if ($virtualMachine.properties.storageProfile.imageReference.offer.Contains('ubuntu-server') -and $virtualMachine.properties.storageProfile.imageReference.sku.Contains('22_04')) { 
+if ($virtualMachine.properties.storageProfile.imageReference.offer.Contains('ubuntu-server') -and $virtualMachine.properties.storageProfile.imageReference.sku.Contains('22_04')) {
     Write-Output "`u{2705} Checked Virtual Machine OS image offer - OK"
-} else { 
+} else {
     Write-Output `u{1F914}
-    throw "Virtual Machine uses wrong OS image. Please re-deploy VM using Ubuntu Server 22.04 and try again" 
+    throw "Virtual Machine uses wrong OS image. Please re-deploy VM using Ubuntu Server 22.04 and try again"
 }
 
 if ($virtualMachine.properties.hardwareProfile.vmSize -eq "Standard_B1s") { 
