@@ -78,13 +78,13 @@
         "tier": "Regional"
       },
       "properties": {
-        "ipAddress": "172.167.13.128",
+        "ipAddress": "20.162.218.224",
         "publicIPAddressVersion": "IPv4",
         "publicIPAllocationMethod": "Dynamic",
         "idleTimeoutInMinutes": 4,
         "dnsSettings": {
-          "domainNameLabel": "[parameters('publicIPAddresses_vm_task_2_name')]",
-          "fqdn": "[concat(parameters('publicIPAddresses_vm_task_2_name'), '.uksouth.cloudapp.azure.com')]"
+          "domainNameLabel": "vmtask2",
+          "fqdn": "vmtask2.uksouth.cloudapp.azure.com"
         },
         "ipTags": [],
         "ddosSettings": {
