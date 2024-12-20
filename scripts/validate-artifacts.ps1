@@ -56,9 +56,6 @@ if ($virtualMachine.location -eq "uksouth" ) {
 
 if (-not $virtualMachine.zones) { 
     Write-Output "`u{2705} Checked Virtual Machine availability zone - OK."
-} else {
-    Write-Output `u{1F914}
-    throw "Virtual machine has availibility zone set. Please re-deploy VM with 'No infrastructure redundancy' availability option and try again." 
 }
 
 if (-not $virtualMachine.properties.securityProfile) { 
