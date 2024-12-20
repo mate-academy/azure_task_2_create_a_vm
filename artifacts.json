@@ -1,3 +1,3 @@
 {
-  "resourcesTemplate": ""
+  "resourcesTemplate": "https://nonuniquestoragename.blob.core.windows.net/task-artifacts/task2/exported-template.json?sv=2023-08-03&se=2025-01-19T16%3A45%3A19Z&sr=b&sp=r&sig=ZQaM4xg8jU70j3crFt%2F3eu3gRFP9ZL%2Fr94mt1meEwIc%3D"
 }
