@@ -33,13 +33,13 @@ If you are a Windows user, before running this command, please also run the foll
     ```
 ## Requirements
 
-In this task, you need to perform the following steps: 
+In this task, you need to perform the following steps:
 
 1. Create a Virtual Machine:
 
     1. Create a new resource group `mate-azure-task-2`
 
-    2. Create a Linux Virtual Machine in the resource group from the previous step: 
+    2. Create a Linux Virtual Machine in the resource group from the previous step:
         
         - Use any allowed VM name
         - Use `UK South` Azure region
@@ -59,22 +59,22 @@ In this task, you need to perform the following steps:
     1. Connect to the VM using SSH, create a folder `/app`, and configure your user as the owner of the folder: 
         ```
             ssh <your-vm-username>@<your-public-ip-DNS-name>
-            sudo mkdir /app 
+            sudo mkdir /app
             sudo chown <your-vm-username>:<your-vm-username> /app
         ```
 
-    2. From your computer, copy the content of the folder `app` to your virtual machine (run the command in the folder of this repository): 
-        
+    2. From your computer, copy the content of the folder `app` to your virtual machine (run the command in the folder of this repository):
+
         ```
             scp -r app/* <your-vm-username>@<your-public-ip-DNS-name>:/app
         ```
 
     3. Connect to the virtual machine again using SSH, install pre-requirements, and configure a service for the application:
-        
+
         ```
             sudo apt install python3-pip
             cd /app
-            sudo mv todoapp.service /etc/systemd/system/ 
+            sudo mv todoapp.service /etc/systemd/system/
             sudo systemctl daemon-reload
             sudo systemctl start todoapp
             sudo systemctl enable todoapp
@@ -86,7 +86,7 @@ In this task, you need to perform the following steps:
             systemctl status todoapp
         ```
 
-3. Verify that the web application is running; for that, open in a web browser the following URL: `http://<your-public-ip-DNS-name>:8080`. You should see the main page of the todo app. 
+3. Verify that the web application is running; for that, open in a web browser the following URL: `http://<your-public-ip-DNS-name>:8080`. You should see the main page of the todo app.
 
 4. Run artifacts generation script `scripts/generate-artifacts.ps1`.
 
