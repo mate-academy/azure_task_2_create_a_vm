@@ -1,3 +1,4 @@
 {
-  "resourcesTemplate": "https://whatislavx.blob.core.windows.net/task-artifacts/task2/exported-template.json?sv=2025-07-05&se=2026-02-14T12%3A18%3A44Z&sr=b&sp=r&sig=9iL5W87TBMD5UAMICsvQA8pQVu8e1rRV95XyfaClzQ4%3D"
+  "resourcesTemplate": "https://whatislavx.blob.core.windows.net/task-artifacts/task2/exported-template.json?sv=2025-07-05&se=2026-02-14T12%3A18%3A44Z&sr=b&sp=r&sig=9iL5W87TBMD5UAMICsvQA8pQVu8e1rRV95XyfaClzQ4%3D",
+  "explanation": "I had to create the virtual machine in the France Central region because my subscription in the UK South region does not support the required Azure VM sizes."
 }
