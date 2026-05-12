@@ -1,3 +1,4 @@
 {
-  "resourcesTemplate": ""
+  "resourcesTemplate": "https://mystorageaccountname1234.blob.core.windows.net/task-artifacts/task2/exported-template.json?sv=2025-07-05&se=2026-06-11T20%3A29%3A22Z&sr=b&sp=r&sig=rOc54sm5JKTCwb%2BrwZm7XkmoFarWXygvY3QWtKFYisY%3D"
 }
+// THATS MY REAL STORAGE ACCOUNT NAME!!!!!!!
