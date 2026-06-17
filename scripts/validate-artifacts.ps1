@@ -47,7 +47,7 @@ if ($virtualMachine) {
     throw "Unable to find Virtual Machine in the task resource group. Please make sure that you created the Virtual Machine and try again."
 }
 
-if ($virtualMachine.location -eq "westeurope" ) {
+if ($virtualMachine.location -eq "uksouth" ) { 
     Write-Output "`u{2705} Checked Virtual Machine location - OK."
 } else { 
     Write-Output `u{1F914}
@@ -61,29 +61,29 @@ if (-not $virtualMachine.zones) {
     throw "Virtual machine has availibility zone set. Please re-deploy VM with 'No infrastructure redundancy' availability option and try again." 
 }
 
-if (-not $virtualMachine.properties.securityProfile.securityType -or $virtualMachine.properties.securityProfile.securityType -eq "Standard") {
+if (-not $virtualMachine.properties.securityProfile) { 
     Write-Output "`u{2705} Checked Virtual Machine security type settings - OK."
-} else {
+} else { 
     Write-Output `u{1F914}
     throw "Virtual machine security type is set to TMP or Confidential. Please re-deploy VM with security type set to 'Standard' and try again."
 }
 
 if ($virtualMachine.properties.storageProfile.imageReference.publisher -eq "canonical") { 
     Write-Output "`u{2705} Checked Virtual Machine OS image publisher - OK" 
-} else {
+} else { 
     Write-Output `u{1F914}
     throw "Virtual Machine uses OS image from unknown published. Please re-deploy the VM using OS image from publisher 'Cannonical' and try again."
 }
-if ($virtualMachine.properties.storageProfile.imageReference.offer.Contains('ubuntu') -and ($virtualMachine.properties.storageProfile.imageReference.sku.Contains('22_04') -or $virtualMachine.properties.storageProfile.imageReference.offer.Contains('22_04'))) {
+if ($virtualMachine.properties.storageProfile.imageReference.offer.Contains('ubuntu-server') -and $virtualMachine.properties.storageProfile.imageReference.sku.Contains('22_04')) { 
     Write-Output "`u{2705} Checked Virtual Machine OS image offer - OK"
-} else {
+} else { 
     Write-Output `u{1F914}
-    throw "Virtual Machine uses wrong OS image. Please re-deploy VM using Ubuntu Server 22.04 and try again"
+    throw "Virtual Machine uses wrong OS image. Please re-deploy VM using Ubuntu Server 22.04 and try again" 
 }
 
-if ($virtualMachine.properties.hardwareProfile.vmSize -eq "Standard_B2ts_v2") {
+if ($virtualMachine.properties.hardwareProfile.vmSize -eq "Standard_B1s") { 
     Write-Output "`u{2705} Checked Virtual Machine size - OK"
-} else {
+} else { 
     Write-Output `u{1F914}
     throw "Virtual Machine size is not set to B1s. Please re-deploy VM with size set to B1s and try again."
 }
@@ -109,7 +109,7 @@ if ($pip) {
     throw "Unable to find Public IP address resouce. Please create a Public IP resouce (Basic SKU, dynamic IP allocation) and try again."
 }
 
-if (($pip.sku.name -eq "Standard" ) -and ($pip.properties.publicIPAllocationMethod -eq "Static")) { 
+if (($pip.sku.name -eq "Basic" ) -and ($pip.properties.publicIPAllocationMethod -eq "Dynamic")) { 
     Write-Output "`u{2705} Checked Public IP SKU and allocation method - OK"
 } else { 
     Write-Output `u{1F914}
