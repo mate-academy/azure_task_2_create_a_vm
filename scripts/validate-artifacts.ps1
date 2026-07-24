@@ -61,9 +61,9 @@ if (-not $virtualMachine.zones) {
     throw "Virtual machine has availibility zone set. Please re-deploy VM with 'No infrastructure redundancy' availability option and try again." 
 }
 
-if (-not $virtualMachine.properties.securityProfile) { 
+if ((-not $virtualMachine.properties.securityProfile) -or ($virtualMachine.properties.securityProfile.securityType -eq "Standard")) {
     Write-Output "`u{2705} Checked Virtual Machine security type settings - OK."
-} else { 
+} else {
     Write-Output `u{1F914}
     throw "Virtual machine security type is set to TMP or Confidential. Please re-deploy VM with security type set to 'Standard' and try again."
 }
@@ -81,11 +81,11 @@ if ($virtualMachine.properties.storageProfile.imageReference.offer.Contains('ubu
     throw "Virtual Machine uses wrong OS image. Please re-deploy VM using Ubuntu Server 22.04 and try again" 
 }
 
-if ($virtualMachine.properties.hardwareProfile.vmSize -eq "Standard_B1s") { 
+if ($virtualMachine.properties.hardwareProfile.vmSize -eq "Standard_D2as_v4") {
     Write-Output "`u{2705} Checked Virtual Machine size - OK"
-} else { 
+} else {
     Write-Output `u{1F914}
-    throw "Virtual Machine size is not set to B1s. Please re-deploy VM with size set to B1s and try again."
+    throw "Virtual Machine size is not set to Standard_D2as_v4. Please re-deploy VM with size set to Standard_D2as_v4 and try again."
 }
 
 if ($virtualMachine.properties.osProfile.linuxConfiguration.disablePasswordAuthentication -eq $true) { 
@@ -109,7 +109,7 @@ if ($pip) {
     throw "Unable to find Public IP address resouce. Please create a Public IP resouce (Basic SKU, dynamic IP allocation) and try again."
 }
 
-if (($pip.sku.name -eq "Basic" ) -and ($pip.properties.publicIPAllocationMethod -eq "Dynamic")) { 
+if (($pip.sku.name -eq "Standard" ) -and ($pip.properties.publicIPAllocationMethod -eq "Static")) {
     Write-Output "`u{2705} Checked Public IP SKU and allocation method - OK"
 } else { 
     Write-Output `u{1F914}
