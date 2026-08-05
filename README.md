@@ -42,15 +42,15 @@ In this task, you need to perform the following steps:
     2. Create a Linux Virtual Machine in the resource group from the previous step: 
         
         - Use any allowed VM name
-        - Use `UK South` Azure region
+        - Use `Australia Central` Azure region
         - Set availability option to `No infrastructure redundancy`
         - Use `Standard` security type 
-        - Use `Ubuntu Server 22.04` as an operating system (publisher — `Canonical`)
-        - Use `B1s` VM size 
+        - Use `Ubuntu Server 24.04 LTS` as an operating system (publisher — `Canonical`)
+        - Use `Standard_B2ats_v2` VM size
         - Use SSH key authentication (use your own SSH key)
         - Make sure VM is deployed **without auto-generated public IP**
 
-    3. Create and attach a public IP with SKU `Basic`. Create a DNS label for the public IP. 
+    3. Create and attach a public IP with SKU `Standard` and static allocation. Create a DNS label for the public IP.
 
     4. Configure VM's Network Security Group to accept network connections on `22` and `8080` TCP ports. For that, create **two separate NSG rules**.
 
