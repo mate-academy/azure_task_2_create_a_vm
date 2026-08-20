@@ -4,7 +4,7 @@ param(
 )
 
 # default script values
-$rgName = "mate-azure-task-2"
+$rgName = "mate-create-vm"
 $taskName = "task2"
 
 $containerName = "task-artifacts"

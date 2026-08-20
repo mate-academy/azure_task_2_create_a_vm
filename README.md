@@ -42,15 +42,15 @@ In this task, you need to perform the following steps:
     2. Create a Linux Virtual Machine in the resource group from the previous step: 
         
         - Use any allowed VM name
-        - Use `UK South` Azure region
+        - Use ` ` Azure region
         - Set availability option to `No infrastructure redundancy`
         - Use `Standard` security type 
         - Use `Ubuntu Server 22.04` as an operating system (publisher — `Canonical`)
-        - Use `B1s` VM size 
+        - Use `B1s` VM size
         - Use SSH key authentication (use your own SSH key)
         - Make sure VM is deployed **without auto-generated public IP**
 
-    3. Create and attach a public IP with SKU `Basic`. Create a DNS label for the public IP. 
+    3. Create and attach a public IP with SKU `Basic`. Create a DNS label for the public IP.
 
     4. Configure VM's Network Security Group to accept network connections on `22` and `8080` TCP ports. For that, create **two separate NSG rules**.
 
@@ -59,22 +59,22 @@ In this task, you need to perform the following steps:
     1. Connect to the VM using SSH, create a folder `/app`, and configure your user as the owner of the folder: 
         ```
             ssh <your-vm-username>@<your-public-ip-DNS-name>
-            sudo mkdir /app 
+            sudo mkdir /app
             sudo chown <your-vm-username>:<your-vm-username> /app
         ```
 
-    2. From your computer, copy the content of the folder `app` to your virtual machine (run the command in the folder of this repository): 
+    2. From your computer, copy the content of the folder `app` to your virtual machine (run the command in the folder of this repository):
         
         ```
             scp -r app/* <your-vm-username>@<your-public-ip-DNS-name>:/app
         ```
 
     3. Connect to the virtual machine again using SSH, install pre-requirements, and configure a service for the application:
-        
+
         ```
             sudo apt install python3-pip
             cd /app
-            sudo mv todoapp.service /etc/systemd/system/ 
+            sudo mv todoapp.service /etc/systemd/system/
             sudo systemctl daemon-reload
             sudo systemctl start todoapp
             sudo systemctl enable todoapp
