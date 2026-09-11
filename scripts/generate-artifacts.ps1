@@ -4,7 +4,7 @@ param(
 )
 
 # default script values
-$rgName = "mate-azure-task-2"
+$rgName = "mate-azure-task-2-sweden"
 $taskName = "task2"
 
 $containerName = "task-artifacts"
