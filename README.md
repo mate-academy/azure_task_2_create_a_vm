@@ -33,7 +33,7 @@ If you are a Windows user, before running this command, please also run the foll
     ```
 ## Requirements
 
-In this task, you need to perform the following steps: 
+In this task, you need to perform the following steps:
 
 1. Create a Virtual Machine:
 
