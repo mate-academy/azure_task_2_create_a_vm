@@ -47,11 +47,11 @@ if ($virtualMachine) {
     throw "Unable to find Virtual Machine in the task resource group. Please make sure that you created the Virtual Machine and try again."
 }
 
-if ($virtualMachine.location -eq "uksouth" ) { 
+if ($virtualMachine.location -eq "polandcentral") { 
     Write-Output "`u{2705} Checked Virtual Machine location - OK."
 } else { 
     Write-Output `u{1F914}
-    throw "Virtual is not deployed to the UK South region. Please re-deploy VM to the UK South region and try again."
+    throw "Virtual is not deployed to the polandcentral region. Please re-deploy VM to the polandcentral region and try again."
 }
 
 if (-not $virtualMachine.zones) { 
@@ -61,7 +61,7 @@ if (-not $virtualMachine.zones) {
     throw "Virtual machine has availibility zone set. Please re-deploy VM with 'No infrastructure redundancy' availability option and try again." 
 }
 
-if (-not $virtualMachine.properties.securityProfile) { 
+if ($virtualMachine.properties.securityProfile -and $virtualMachine.properties.securityProfile.securityType -eq "Standard") { 
     Write-Output "`u{2705} Checked Virtual Machine security type settings - OK."
 } else { 
     Write-Output `u{1F914}
@@ -74,18 +74,18 @@ if ($virtualMachine.properties.storageProfile.imageReference.publisher -eq "cano
     Write-Output `u{1F914}
     throw "Virtual Machine uses OS image from unknown published. Please re-deploy the VM using OS image from publisher 'Cannonical' and try again."
 }
-if ($virtualMachine.properties.storageProfile.imageReference.offer.Contains('ubuntu-server') -and $virtualMachine.properties.storageProfile.imageReference.sku.Contains('22_04')) { 
+if ($virtualMachine.properties.storageProfile.imageReference.offer.Contains('ubuntu') -and $virtualMachine.properties.storageProfile.imageReference.sku.Contains('server')) { 
     Write-Output "`u{2705} Checked Virtual Machine OS image offer - OK"
 } else { 
     Write-Output `u{1F914}
     throw "Virtual Machine uses wrong OS image. Please re-deploy VM using Ubuntu Server 22.04 and try again" 
 }
 
-if ($virtualMachine.properties.hardwareProfile.vmSize -eq "Standard_B1s") { 
+if ($virtualMachine.properties.hardwareProfile.vmSize -eq "Standard_B2ats_v2") { 
     Write-Output "`u{2705} Checked Virtual Machine size - OK"
 } else { 
     Write-Output `u{1F914}
-    throw "Virtual Machine size is not set to B1s. Please re-deploy VM with size set to B1s and try again."
+    throw "Virtual Machine size is not set to B2ats_v2. Please re-deploy VM with size set to B2ats_v2 and try again."
 }
 
 if ($virtualMachine.properties.osProfile.linuxConfiguration.disablePasswordAuthentication -eq $true) { 
@@ -109,11 +109,11 @@ if ($pip) {
     throw "Unable to find Public IP address resouce. Please create a Public IP resouce (Basic SKU, dynamic IP allocation) and try again."
 }
 
-if (($pip.sku.name -eq "Basic" ) -and ($pip.properties.publicIPAllocationMethod -eq "Dynamic")) { 
+if ($pip.sku.name -eq "Standard" -and $pip.properties.publicIPAllocationMethod -eq "Static") { 
     Write-Output "`u{2705} Checked Public IP SKU and allocation method - OK"
 } else { 
     Write-Output `u{1F914}
-    Write-Warning "Unable to verify Public IP SKU and allocation method. Please check if public IP using 'Basic' SKU and dynamic IP allocation method."
+    Write-Warning "Unable to verify Public IP SKU and allocation method. Please check if public IP using 'Standard' SKU and static IP allocation method."
 }
 
 if ($pip.properties.dnsSettings.domainNameLabel) { 
