@@ -61,11 +61,14 @@ if (-not $virtualMachine.zones) {
     throw "Virtual machine has availibility zone set. Please re-deploy VM with 'No infrastructure redundancy' availability option and try again." 
 }
 
-if (-not $virtualMachine.properties.securityProfile) { 
+if (
+    -not $virtualMachine.properties.securityProfile -or
+    $virtualMachine.properties.securityProfile.securityType -eq "Standard"
+) {
     Write-Output "`u{2705} Checked Virtual Machine security type settings - OK."
-} else { 
-    Write-Output `u{1F914}
-    throw "Virtual machine security type is set to TMP or Confidential. Please re-deploy VM with security type set to 'Standard' and try again."
+} else {
+    Write-Output "`u{1F914}"
+    throw "Virtual machine security type is not set to 'Standard'."
 }
 
 if ($virtualMachine.properties.storageProfile.imageReference.publisher -eq "canonical") { 
@@ -74,11 +77,14 @@ if ($virtualMachine.properties.storageProfile.imageReference.publisher -eq "cano
     Write-Output `u{1F914}
     throw "Virtual Machine uses OS image from unknown published. Please re-deploy the VM using OS image from publisher 'Cannonical' and try again."
 }
-if ($virtualMachine.properties.storageProfile.imageReference.offer.Contains('ubuntu-server') -and $virtualMachine.properties.storageProfile.imageReference.sku.Contains('22_04')) { 
+if (
+    $virtualMachine.properties.storageProfile.imageReference.offer -eq "ubuntu-22_04-lts" -and
+    $virtualMachine.properties.storageProfile.imageReference.sku -eq "server"
+) {
     Write-Output "`u{2705} Checked Virtual Machine OS image offer - OK"
-} else { 
-    Write-Output `u{1F914}
-    throw "Virtual Machine uses wrong OS image. Please re-deploy VM using Ubuntu Server 22.04 and try again" 
+} else {
+    Write-Output "`u{1F914}"
+    throw "Virtual Machine uses wrong OS image. Please re-deploy VM using Ubuntu Server 22.04 and try again"
 }
 
 if ($virtualMachine.properties.hardwareProfile.vmSize -eq "Standard_B1s") { 
