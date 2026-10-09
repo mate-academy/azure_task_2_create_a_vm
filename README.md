@@ -42,7 +42,7 @@ In this task, you need to perform the following steps:
     2. Create a Linux Virtual Machine in the resource group from the previous step: 
         
         - Use any allowed VM name
-        - Use `UK South` Azure region
+        - Use any Azure region that is available in your subscription
         - Set availability option to `No infrastructure redundancy`
         - Use `Standard` security type 
         - Use `Ubuntu Server 22.04` as an operating system (publisher — `Canonical`)
