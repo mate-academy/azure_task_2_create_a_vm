@@ -1,0 +1,75 @@
+Subject: Task "Azure VM Deployment" - validate-artifacts.ps1 fails on security type, but the VM is Standard
+
+Hello,
+
+Please review my submission for the task azure_task_2_create_a_vm.
+Branch: newline
+Last commit: d1ff811
+
+SUMMARY
+-------
+The test script validate-artifacts.ps1 fails with this message:
+
+  "Virtual machine security type is set to TMP or Confidential.
+   Please re-deploy VM with security type set to 'Standard' and try again."
+
+However, my VM is deployed with security type Standard. I re-deployed it
+5-6 times, selecting Standard each time, and got the same result every time.
+I believe the problem is in how the validation script checks this setting,
+not in my VM.
+
+WHAT I CHECKED
+--------------
+1. Azure Portal, VM -> Overview -> Security:
+   Security type = Standard.
+
+2. PowerShell:
+   Get-AzVM -ResourceGroupName mate-azure-task-2 -Name final |
+       ForEach-Object { $_.SecurityProfile.SecurityType }
+
+   Output: Standard
+
+3. The resource group mate-azure-task-2 contains only one VM ("final").
+   There are no old VMs left from previous attempts.
+
+4. The other checks in validate-artifacts.ps1 pass before the failure:
+   - Virtual Machine exists - OK
+   - Availability zone (No infrastructure redundancy) - OK
+   The script fails on the next check, at line 61.
+
+WHAT THE SCRIPT DOES
+--------------------
+Line 61 of scripts/validate-artifacts.ps1 comes from this block:
+
+  if (-not $virtualMachine.properties.securityProfile) {
+      Write-Output "Checked Virtual Machine security type settings - OK."
+  } else {
+      throw "Virtual machine security type is set to TMP or Confidential. ..."
+  }
+
+So the script requires the securityProfile block to be completely absent from
+the exported ARM template. It does not read the value of securityType.
+It treats ANY non-empty securityProfile as "TMP or Confidential".
+
+My VM does have a securityProfile object, and its securityType is Standard
+(see item 2 above). As far as I can tell, the current Azure Portal explicitly
+writes securityProfile with securityType = Standard when "Standard" is
+selected, which makes this check fail even though the setting is correct.
+I have not been able to remove this block through the Portal.
+
+All other requirements are met:
+- Ubuntu Server 22.04 (Canonical), size B1s, SSH key authentication
+- Availability: No infrastructure redundancy
+- Public IP (Basic SKU) with a DNS label, attached to the VM
+- NSG with two separate rules for TCP 22 and TCP 8080
+- Web application deployed to /app and running as the todoapp service
+  on port 8080
+
+REQUEST
+-------
+Could you please approve the submission, or advise how to create the VM so
+that the securityProfile block is absent (for example, a specific Portal
+option or CLI/PowerShell command)? If the check needs to be fixed on the
+course side, I can provide any additional evidence you need.
+
+Thank you!
